@@ -22,7 +22,7 @@ class Bottom_Navigation extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.home), label: 'Transactions'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.category), label: 'Transactions')
+                  icon: Icon(Icons.category), label: 'Category')
             ]);
       },
     );
