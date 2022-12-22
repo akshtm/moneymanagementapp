@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_manager/db/category/category_db.dart';
 import 'package:money_manager/models/category/category_model.dart';
+import 'package:money_manager/screen/add_trasaction/screen_add_Trasaction.dart';
 import 'package:money_manager/screen/home/screen_home.dart';
 
 Future<void> main() async {
@@ -27,10 +28,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Screen_Home());
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Screen_Home(),
+      routes: {
+        ScreenAddTrasaction.routeName: (ctx) => const ScreenAddTrasaction()
+      },
+    );
   }
 }

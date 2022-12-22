@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:money_manager/models/category/category_model.dart';
@@ -9,6 +11,7 @@ const CATEGORY_DB_NAME = 'category-database';
 abstract class CategoryDbFunctions {
   Future<List<CategoryModel>> getCategories();
   Future<void> insertCategory(CategoryModel value);
+  Future<void> deleteCategory(String CategoryId);
 }
 
 class categoryDB implements CategoryDbFunctions {
@@ -23,10 +26,12 @@ class categoryDB implements CategoryDbFunctions {
   ValueNotifier<List<CategoryModel>> IncomeCategoryListener = ValueNotifier([]);
   ValueNotifier<List<CategoryModel>> ExpenseCategoryListener =
       ValueNotifier([]);
+
   @override
   Future<void> insertCategory(CategoryModel value) async {
     final _categoryDB = await Hive.openBox<CategoryModel>(CATEGORY_DB_NAME);
-    await _categoryDB.add(value);
+    await _categoryDB.put(value.id, value);
+
     refreshUI();
   }
 
@@ -38,18 +43,36 @@ class categoryDB implements CategoryDbFunctions {
 
   Future<void> refreshUI() async {
     final getallCategories = await getCategories();
+    IncomeCategoryListener.value.clear();
+    ExpenseCategoryListener.value.clear();
+    log('clear legth Income' + IncomeCategoryListener.value.length.toString());
+    log('clear legth Expense' +
+        ExpenseCategoryListener.value.length.toString());
 
     await Future.forEach(getallCategories, (CategoryModel category) {
-      IncomeCategoryListener.value.clear;
-      ExpenseCategoryListener.value.clear;
       if (category.type == CategoryType.income) {
+        log("income -----");
+        log("category type ===" + category.type.toString());
+
         IncomeCategoryListener.value.add(category);
-      } else {
+      } else if (category.type == CategoryType.expence) {
+        log("expense ======");
+        log("category type ===" + category.type.toString());
         ExpenseCategoryListener.value.add(category);
       }
     });
+    log(IncomeCategoryListener.value.length.toString());
 
     IncomeCategoryListener.notifyListeners();
     ExpenseCategoryListener.notifyListeners();
+  }
+
+  @override
+  Future<void> deleteCategory(String CategoryId) async {
+    final _categoryDB = await Hive.openBox<CategoryModel>(CATEGORY_DB_NAME);
+
+    await _categoryDB.delete(CategoryId);
+    log(_categoryDB.values.length.toString());
+    refreshUI();
   }
 }
