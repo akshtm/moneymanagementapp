@@ -27,9 +27,14 @@ class _Screen_CategoryState extends State<Screen_Category>
   Widget build(BuildContext context) {
     return Column(children: [
       TabBar(
+        indicator: BoxDecoration(
+            borderRadius: BorderRadius.circular(50), // Creates border
+            color: Color.fromARGB(
+                255, 7, 115, 158)), //Change background color from here
+
         controller: _tabController,
-        unselectedLabelColor: Colors.grey,
-        labelColor: Colors.black,
+        unselectedLabelColor: Colors.black,
+        labelColor: Colors.white,
         tabs: [
           Tab(
             text: 'INCOME',
