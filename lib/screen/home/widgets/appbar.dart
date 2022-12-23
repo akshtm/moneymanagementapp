@@ -8,7 +8,13 @@ class appbarMOney extends StatelessWidget {
     height = size.height;
     width = size.width;
     return Container(
-      decoration: BoxDecoration(color: Colors.grey),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 225, 214, 60),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(60),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
       height: height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -16,7 +22,10 @@ class appbarMOney extends StatelessWidget {
           SizedBox(
             height: height / 10,
           ),
-          Text('MONEY MANAGER')
+          Text(
+            'MONEY MANAGER',
+            style: TextStyle(fontSize: 30, color: Colors.white),
+          )
         ],
       ),
     );
