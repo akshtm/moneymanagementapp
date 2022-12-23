@@ -33,6 +33,7 @@ dependencies:
   intl: ^0.17.0
   flutter_slidable: ^1.2.0
   google_fonts: ^3.0.1
+  animated_text_kit: ^4.2.2
 
 
   # The following adds the Cupertino Icons font to your application.

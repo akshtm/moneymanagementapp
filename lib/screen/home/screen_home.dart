@@ -10,9 +10,16 @@ import 'package:money_manager/screen/home/widgets/appbar.dart';
 import 'package:money_manager/screen/home/widgets/bottom_navigation.dart';
 import 'package:money_manager/screen/transaction/screen_transaction.dart';
 
-class Screen_Home extends StatelessWidget {
+class Screen_Home extends StatefulWidget {
   Screen_Home({Key? key}) : super(key: key);
   static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
+
+  @override
+  State<Screen_Home> createState() => _Screen_HomeState();
+}
+
+class _Screen_HomeState extends State<Screen_Home> {
+  String? changer;
   final _pages = [Screen_Transaction(), Screen_Category()];
 
   @override
@@ -30,16 +37,22 @@ class Screen_Home extends StatelessWidget {
       bottomNavigationBar: const Bottom_Navigation(),
       body: SafeArea(
           child: ValueListenableBuilder(
-              valueListenable: selectedIndexNotifier,
+              valueListenable: Screen_Home.selectedIndexNotifier,
               builder: (BuildContext context, int updatedIndex, _) {
                 return _pages[updatedIndex];
               })),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: TextButton.icon(
         onPressed: () {
-          if (selectedIndexNotifier.value == 0) {
+          if (Screen_Home.selectedIndexNotifier.value == 0) {
+            setState(() {
+              changer = 'tra';
+            });
             Navigator.of(context).pushNamed(ScreenAddTrasaction.routeName);
             print('add trans');
           } else {
+            setState(() {
+              changer = 'cat';
+            });
             showCategoryAddPopup(context);
             // print('addcategry');
             // final sample = CategoryModel(
@@ -49,7 +62,8 @@ class Screen_Home extends StatelessWidget {
             // categoryDB().insertCategory(sample);
           }
         },
-        child: Icon(Icons.add),
+        icon: Icon(Icons.add),
+        label: Text(changer == 'tra' ? 'ADD TRAS' : 'ADD'),
       ),
     );
   }
